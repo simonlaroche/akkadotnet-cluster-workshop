@@ -25,14 +25,29 @@ namespace Akka.CQRS.Infrastructure
         {
             var config = c;
 
+            if (appConfig.NeedPersistence)
+            {
+                var mongoCs = Environment.GetEnvironmentVariable("MONGO_CONNECTION_STR")
+                    ?.Trim();
+
+                if (string.IsNullOrEmpty(mongoCs))
+                {
+                    Console.WriteLine("No mongo connectiontion string");
+                    throw new ConfigurationException("Missing Mongo connection string env var");
+                }
+                
+                Console.WriteLine($"Connecting to mongoDb at {mongoCs}");
+                config.WithFallback(GetMongoHocon(mongoCs));
+            }
+            
             config = config
-                .WithFallback(GetOpsConfig());
+                .WithFallback(GetOpsConfig())
                 //.WithFallback(TradeEventSerializer.Config)
                 //.WithFallback(ClusterSharding.DefaultConfig())
                 //.WithFallback(DistributedData.DistributedData.DefaultConfig()) // needed for DData sharding
                 //.WithFallback(ClusterClientReceptionist.DefaultConfig())
                 //.WithFallback(DistributedPubSub.DefaultConfig())
-                //.BootstrapFromDocker();
+                .BootstrapFromDocker();
 
 
 #if PHOBOS
