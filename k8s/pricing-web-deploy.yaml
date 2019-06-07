@@ -27,7 +27,7 @@ spec:
       targetPort: 80
   selector:
     app: pricing-web
-  type: LoadBalancer
+  type: NodePort
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -39,7 +39,7 @@ metadata:
 spec:
   strategy:
       type: Recreate
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: pricing-web
@@ -51,7 +51,7 @@ spec:
       terminationGracePeriodSeconds: 35
       containers:
       - name: pricing-web
-        image: akka.cqrs.pricing.web:0.1.0
+        image: akka.cqrs.pricing.web:0.2.0
         lifecycle:
           preStop:
             exec:

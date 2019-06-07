@@ -335,13 +335,13 @@ Target "BuildDockerImages" (fun _ ->
                 info.FileName <- "docker"
                 info.WorkingDirectory <- Path.GetDirectoryName projectPath
                 info.Arguments <- args) (System.TimeSpan.FromMinutes 5.0) (* Reasonably long-running task. *)
-
+        
     let runSingleProject project =
         let projectName = Path.GetFileNameWithoutExtension project
         let imageName = mapDockerImageName projectName
         let result = match imageName with
                         | None -> 0
-                        | Some(name) -> buildDockerImage name project
+                        | Some(name) -> buildDockerImage name project                        
         if result <> 0 then failwithf "docker build failed. %s" project
 
     projects |> Seq.iter (runSingleProject)

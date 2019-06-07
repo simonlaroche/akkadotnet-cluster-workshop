@@ -280,3 +280,15 @@ Now go and kill the original node you were connected to - the first one of the `
 
 ##### Known Issues
 This sample is currently affected by https://github.com/akkadotnet/akka.net/issues/3414, so you will need to explicitly delete the MongoDb container (not just stop it - DELETE it) every time you restart this Docker cluster from scratch. We're working on fixing that issue and should have a patch for it shortly.
+
+### Testing with Minicube on Ubuntu 18.04
+
+Install kubectl and minicube following these instructions https://kubernetes.io/docs/tasks/tools/install-minikube/ with Virtual Box.
+
+Start your minikube using this command. The http proxy env variable is necessary in order the access the dashboard and the extra config is necessary in order the make the dns service available for our pods:
+
+`sudo minikube start --vm-driver=virtualbox --extra-config=kubelet.resolv-conf=/run/systemd/resolve/resolv.conf`
+
+In order to use local docker images to avoid uploading to a repository the docker environment variables must be overriden to use the minicube docker:
+
+`eval $(minikube docker-env)`
