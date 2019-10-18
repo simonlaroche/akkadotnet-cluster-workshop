@@ -64,7 +64,7 @@ spec:
         - name: CLUSTER_IP
           value: "$(POD_NAME).pricing-web"
         - name: CLUSTER_SEEDS
-          value: akka.tcp://AkkaTrader@pricing-0.pricing:5110,akka.tcp://AkkaTrader@pricing-1.pricing:5110,akka.tcp://AkkaTrader@pricing-2.pricing:5110
+          value: akka.tcp://AkkaTrader@pricing-0.pricing.akka-cqrs:5110,akka.tcp://AkkaTrader@pricing-1.pricing.akka-cqrs:5110,akka.tcp://AkkaTrader@pricing-2.pricing.akka-cqrs:5110
         - name: ENABLE_PHOBOS
           value: "true"
         - name: STATSD_PORT

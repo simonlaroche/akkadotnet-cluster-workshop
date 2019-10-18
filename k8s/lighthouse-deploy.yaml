@@ -51,9 +51,9 @@ spec:
             fieldRef:
               fieldPath: metadata.name
         - name: CLUSTER_IP
-          value: "$(POD_NAME).lighthouse"
+          value: "$(POD_NAME).lighthouse.akka-cqrs"
         - name: CLUSTER_SEEDS
-          value: akka.tcp://$(ACTORSYSTEM)@lighthouse-0.lighthouse:4053,akka.tcp://$(ACTORSYSTEM)@lighthouse-1.lighthouse:4053,akka.tcp://$(ACTORSYSTEM)@lighthouse-2.lighthouse:4053
+          value: akka.tcp://$(ACTORSYSTEM)@lighthouse-0.lighthouse.akka-cqrs:4053,akka.tcp://$(ACTORSYSTEM)@lighthouse-1.lighthouse.akka-cqrs:4053
         livenessProbe:
           tcpSocket:
             port: 4053

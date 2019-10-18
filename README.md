@@ -287,8 +287,12 @@ Install kubectl and minicube following these instructions https://kubernetes.io/
 
 Start your minikube using this command. The http proxy env variable is necessary in order the access the dashboard and the extra config is necessary in order the make the dns service available for our pods:
 
-`sudo minikube start --vm-driver=virtualbox --extra-config=kubelet.resolv-conf=/run/systemd/resolve/resolv.conf`
+`minikube start --vm-driver=virtualbox --extra-config=kubelet.resolv-conf=/run/systemd/resolve/resolv.conf`
 
 In order to use local docker images to avoid uploading to a repository the docker environment variables must be overriden to use the minicube docker:
 
 `eval $(minikube docker-env)`
+
+Since minikube does not support LoadBalancer node type we use a NodePort for the Web UI. To connect to the Web UI connect to the IP of the VM `minikube ip` and the node port that the command `kubectl describe services pricing-ui -n akka-cqrs` returns. 
+
+Depending on the resources available on your system you might want to remove jaeger and statsd from you k8s cluster.
